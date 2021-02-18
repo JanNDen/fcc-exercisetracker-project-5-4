@@ -9,6 +9,11 @@ app.use(express.static('public'))
 
 /****************** <JANNDEN> ****************/
 
+// Connection
+const mongoose = require("mongoose");
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+const { Schema } = mongoose;
+
 // Get Index File if there is a successful DB connection
 app.get('/', (req, res) => {
   if (mongoose.connection.readyState == 1) {
@@ -18,11 +23,7 @@ app.get('/', (req, res) => {
   }
 });
 
-// Connection
-const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-const { Schema } = mongoose;
-
+// Creating DBs
 const personSchema = new Schema({
   username: {type: String, unique: true}
 });
